@@ -1,5 +1,7 @@
 using MicroFrontend.Api.Common.Interfaces;
+using MicroFrontend.Api.Common.Models;
 using MicroFrontend.Api.Persistence;
+using MicroFrontend.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 builder.Services.AddTransient<IAppDbContext>(provider => provider.GetService<AppDbContext>() ?? throw new InvalidOperationException());
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -28,28 +32,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+// users endpoints
+string usersUrl = "/users";
+app.MapGet(usersUrl, async (IUserService repo) => await repo.GetAsync());
+app.MapGet(usersUrl + "/{id}", 
+    async (IUserService repo, string id) => await repo.GetByIdAsync(id));
+app.MapPost(usersUrl,
+    async (IUserService repo, UserDto requestBody) => await repo.UpsertAsync(requestBody));
+app.MapDelete(usersUrl + "/{id}", async (IUserService repo, string id) => await repo.DeleteAsync(id));
 
 app.Run();
-
-record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
