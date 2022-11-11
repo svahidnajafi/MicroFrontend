@@ -25,6 +25,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 // Services
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddScoped<AppDbContextInitializer>();
 
 var app = builder.Build();
 
@@ -33,6 +34,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+// Initialize database
+using (var scope = app.Services.CreateScope())
+{
+    var initializer = scope.ServiceProvider.GetRequiredService<AppDbContextInitializer>();
+    await initializer.InitializeAsync();
 }
 
 app.UseHttpsRedirection();
