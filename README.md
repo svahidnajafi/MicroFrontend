@@ -2,9 +2,9 @@
 This project is focusing on implementing a micro front-end example using angular and module federation along with a dotnet 6 API.
 
 # Prerequisits
-Node.js: https://nodejs.org/en/
-Angular version 13+: https://angular.io/start
-.Net 6 framework: https://dotnet.microsoft.com/en-us/download
+ - Node.js: https://nodejs.org/en/ 
+ - Angular version 13+: https://angular.io/start 
+ - .Net 6 framework: https://dotnet.microsoft.com/en-us/download 
 
 # Getting started:
  - start the API using the `run-server.bat` file.
