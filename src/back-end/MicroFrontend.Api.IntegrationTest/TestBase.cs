@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using FluentAssertions;
+using MicroFrontend.Api.Domain.Entities;
 using MicroFrontend.Api.IntegrationTest.Common.Models;
 using MicroFrontend.Api.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -50,8 +52,7 @@ public abstract class TestBase
             if (rawResponse is T)
                 return new ServerResponse<T>((T)Convert.ChangeType(rawResponse, typeof(T)));
             T? response = JsonConvert.DeserializeObject<T>(rawResponse);
-            if (response != null)
-                return new ServerResponse<T>(response);
+            return new ServerResponse<T>(response);
         }
         return new ServerResponse<T>(new ErrorResponse(rawResponse));
     }
@@ -85,5 +86,16 @@ public abstract class TestBase
             response.Content.Should().NotBeNull();
         else
             response.Error.Should().NotBeNull();
+    }
+    
+    protected bool DoesUserExists(string? id) => 
+        DatabaseContext.Users.AsNoTracking().Any(u => u.Id == id);
+
+    public async Task<User> SeedExampleUserAsync()
+    {
+        User user = new() { Name = "Gustav", Email = "sigrid48@wilhelm.de" };
+        await DatabaseContext.Users.AddAsync(user);
+        await DatabaseContext.SaveChangesAsync();
+        return user;
     }
 }
