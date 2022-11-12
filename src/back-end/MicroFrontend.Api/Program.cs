@@ -1,5 +1,7 @@
+using FluentValidation.Results;
 using MicroFrontend.Api.Common.Interfaces;
 using MicroFrontend.Api.Common.Models;
+using MicroFrontend.Api.Common.Validators;
 using MicroFrontend.Api.Persistence;
 using MicroFrontend.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -50,8 +52,13 @@ string usersUrl = "/users";
 app.MapGet(usersUrl, async (IUserService repo) => await repo.GetAsync());
 app.MapGet(usersUrl + "/{id}", 
     async (IUserService repo, string id) => await repo.GetByIdAsync(id));
-app.MapPost(usersUrl,
-    async (IUserService repo, UserDto requestBody) => await repo.UpsertAsync(requestBody))
+app.MapPost(usersUrl, async (IUserService repo, UserDto requestBody) =>
+    {
+        ValidationResult result = UserUpsertValidator.GetValidator().Validate(requestBody);
+        if (!result.IsValid)
+            return Results.BadRequest(result.Errors[0].ErrorMessage);
+        return Results.Ok(await repo.UpsertAsync(requestBody));
+    })
     .WithMetadata(new SwaggerOperationAttribute(summary: "Upsert (covers both insert and update)", description: "Send null as the id to do insertion, if you fill the id field it will try to update (edit)."));
 app.MapDelete(usersUrl + "/{id}", async (IUserService repo, string id) => await repo.DeleteAsync(id));
 

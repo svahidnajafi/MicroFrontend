@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MicroFrontend.Api.Common.Exceptions;
 using MicroFrontend.Api.Common.Interfaces;
 using MicroFrontend.Api.Common.Models;
 using MicroFrontend.Api.Domain.Entities;
@@ -46,6 +47,8 @@ public class UserService : IUserService
         else
         {
             entity = await _context.Users.FindAsync(dto.Id);
+            if (entity == null)
+                throw new NotFoundException(nameof(User), dto.Id);
             _mapper.Map(dto, entity);
         }
         
@@ -64,7 +67,7 @@ public class UserService : IUserService
     {
         User? entity = await _context.Users.SingleOrDefaultAsync(e => e.Id == id);
         if (entity == null)
-            throw new KeyNotFoundException();
+            throw new NotFoundException(nameof(User), id);
         _context.Users.Remove(entity);
         await _context.SaveChangesAsync();
         return id;
