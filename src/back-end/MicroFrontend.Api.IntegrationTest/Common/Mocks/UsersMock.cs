@@ -1,6 +1,6 @@
 ﻿using MicroFrontend.Api.Domain.Entities;
 
-namespace MicroFrontend.Api.IntegrationTest.Mocks;
+namespace MicroFrontend.Api.IntegrationTest.Common.Mocks;
 
 public static class UsersMock
 {

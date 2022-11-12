@@ -1,6 +1,6 @@
 ﻿using MicroFrontend.Api.Common.Interfaces;
 using MicroFrontend.Api.Domain.Entities;
-using MicroFrontend.Api.IntegrationTest.Mocks;
+using MicroFrontend.Api.IntegrationTest.Common.Mocks;
 using MicroFrontend.Api.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using MicroFrontend.Api.IntegrationTest.Mocks;
+using MicroFrontend.Api.IntegrationTest.Common.Mocks;
 using MicroFrontend.Api.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
