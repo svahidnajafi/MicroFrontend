@@ -1,0 +1,34 @@
+<div style="width: 400px">
+    <div style="margin-bottom: 25px">
+        <p *ngIf="isInsert" class="mat-dialog-title" style="text-align: center">Add new user</p>
+        <p *ngIf="!isInsert" class="mat-dialog-title" style="text-align: center">Edit user</p>
+    </div>
+
+    <form #upsertForm="ngForm">
+        <div>
+            <mat-form-field class="form-field fill" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput name="name"
+                       style="text-align: left; padding-left: 8px"
+                       [maxlength]="100" [minlength]="3"
+                       [(ngModel)]="request.name" required>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="form-field fill" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput name="email"
+                       style="text-align: left; padding-left: 8px"
+                       [(ngModel)]="request.email" required>
+            </mat-form-field>
+        </div>
+
+        <div style="width: 100%" fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="15px">
+            <button mat-raised-button color="warn" matRipple [matRippleRadius]="20" (click)="cancel()"
+                    style="width: 100%">Cancel</button>
+            <button mat-raised-button color="primary" matRipple [matRippleRadius]="20" (click)="submit()"
+                    [disabled]="upsertForm.invalid"
+                    style="width: 100%">{{isInsert ? 'Add' : 'Edit'}}</button>
+        </div>
+    </form>
+</div>

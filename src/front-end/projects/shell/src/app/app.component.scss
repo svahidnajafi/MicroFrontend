@@ -1,0 +1,12 @@
+.mainContainer {
+  height: 100%;
+  
+  &__sideNav {
+    min-width: 300px;
+    padding: 10px 15px;
+  }
+  
+  &__content {
+    height: 100%;
+  }
+}

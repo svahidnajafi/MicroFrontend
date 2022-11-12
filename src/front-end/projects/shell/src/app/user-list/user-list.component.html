@@ -1,2 +1,33 @@
-<h1>Shell</h1>
-<a routerLink="/user-details">Go to User Details</a>
+<div style="padding: 10px 25px">
+    <mat-card fxLayout="row" fxLayoutAlign="space-between center">
+        <h1>User list</h1>
+        <div>
+            <button mat-raised-button color="primary" (click)="create()">Create new</button>
+        </div>
+    </mat-card>
+    <div style="margin-top: 10px;">
+
+        <mat-card style="margin-top: 36px">
+            <div>
+                <div class="list-header" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxFlex="7%" fxLayoutAlign="center center">#</div>
+                    <div fxFlex="40%" fxLayoutAlign="center center">Id</div>
+                    <div fxFlex="27%" fxLayoutAlign="center center">Name</div>
+                    <div fxFlex="26%" fxLayoutAlign="center center"></div>
+                </div>
+                <mat-divider></mat-divider>
+                <div *ngFor="let user of data; index as i" [ngClass]="( i%2 !== 0 ) ? 'list odd': 'list'">
+                    <div fxFlex="7%" fxLayoutAlign="center center">{{i+1}}</div>
+                    <div fxFlex="40%" fxLayoutAlign="center center">{{user.id}}</div>
+                    <div fxFlex="27%" fxLayoutAlign="center center">{{user.name}}</div>
+                    <div fxFlex="26%" fxLayoutAlign="center center">
+                        <button (click)="details(user)" color="primary" mat-button>Details</button>
+                        <button (click)="edit(user)" color="accent" mat-button>Edit</button>
+                        <button (click)="delete(user)" color="warn" mat-button>Delete</button>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+
+    </div>    
+</div>

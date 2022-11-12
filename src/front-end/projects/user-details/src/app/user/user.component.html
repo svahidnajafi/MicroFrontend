@@ -1,1 +1,22 @@
-<h1>user works!</h1>
+<div class="userDetails">
+    <div *ngIf="!user" class="userDetails__empty">User details is not loaded yet...</div>
+    <div *ngIf="user" class="userDetails__container"
+        fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+        
+        <div class="userDetails__container--row">
+            <span>Id:</span>
+            <span>{{user.id}}</span>
+        </div>
+
+        <div class="userDetails__container--row">
+            <span>Name:</span>
+            <span>{{user.name}}</span>
+        </div>
+
+        <div class="userDetails__container--row">
+            <span>Email:</span>
+            <span>{{user.email}}</span>
+        </div>
+        
+    </div>
+</div>

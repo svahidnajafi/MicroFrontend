@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+
+// Define a light theme
+$light-primary: mat.define-palette(mat.$green-palette);
+$light-accent: mat.define-palette(mat.$amber-palette);
+$light-theme: mat.define-light-theme((
+        color: (
+                primary: $light-primary,
+                accent: $light-accent,
+        )
+));
+
+@include mat.core-color($light-theme);
+@include mat.button-color($light-theme);
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  background-color: #eee;
+}
+
+.list-header div {
+  padding: 2px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  height: 45px;
+  line-height: 45px;
+}
+
+.list {
+  background-color: #fff;
+  color: #000000DE;
+
+  &.odd {
+    background-color: #ddd;
+  }
+
+  & > div {
+    padding: 3px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    height: 45px;
+    line-height: 45px;
+  }
+}
+
+.form-field {
+  &.fill { width: 100%; }
+}

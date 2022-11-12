@@ -17,7 +17,7 @@
     "importHelpers": true,
     "paths": {
       "shared": [
-        "dist/shared"
+        "projects/shared/src/public-api.ts"
       ]
     },
     "target": "es2020",

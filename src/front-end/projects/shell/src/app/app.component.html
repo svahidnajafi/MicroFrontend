@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="mainContainer">
+    <mat-sidenav position="end" mode="side" class="mainContainer__sideNav"
+                 [opened]="sharedService.sideNav$ | async">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div></div>
+            <button mat-icon-button color="warn" (click)="closeSideNav()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <router-outlet name="details"></router-outlet>
+    </mat-sidenav>
+    <mat-sidenav-content class="mainContainer__content">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
