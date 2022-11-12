@@ -1,5 +1,6 @@
 using FluentValidation.Results;
 using MicroFrontend.Api.Common.Interfaces;
+using MicroFrontend.Api.Common.Middlewares;
 using MicroFrontend.Api.Common.Models;
 using MicroFrontend.Api.Common.Validators;
 using MicroFrontend.Api.Persistence;
@@ -62,4 +63,5 @@ app.MapPost(usersUrl, async (IUserService repo, UserDto requestBody) =>
     .WithMetadata(new SwaggerOperationAttribute(summary: "Upsert (covers both insert and update)", description: "Send null as the id to do insertion, if you fill the id field it will try to update (edit)."));
 app.MapDelete(usersUrl + "/{id}", async (IUserService repo, string id) => await repo.DeleteAsync(id));
 
+app.HandleExceptions();
 app.Run();
